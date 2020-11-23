@@ -481,7 +481,7 @@ components:
         id:
           type: integer
           format: int64
-        passengername:
+        username:
           type: string
         firstName:
           type: string
@@ -493,7 +493,7 @@ components:
           type: string
         phone:
           type: string
-        passengerStatus:
+        userStatus:
           type: integer
           description: User Status
           format: int32

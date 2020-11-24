@@ -17,7 +17,7 @@ tags:
 - name: car
   description: Cars to book
 - name: store
-  description: Access to Petstore orders
+  description: Access to Carrental orders
 paths:
   /car:
     put:
@@ -451,6 +451,9 @@ components:
           type: integer
           format: int32
         shipDate:
+          type: string
+          format: date-time
+        returnDate:
           type: string
           format: date-time
         status:

@@ -505,7 +505,6 @@ components:
     Car:
       required:
       - name
-      - photoUrls
       type: object
       properties:
         id:

@@ -1,7 +1,10 @@
 # flproj
-1. Create file in Swagger editor
-2. Define a set of entities that will be in the system and describe what connections will be between them and what operations can be performed on them
-3. Check the validity of the created 'openapi.yaml' using Swagger Editor.
-4. Commit file to the repository
-5. Make a Pull request to merge branches
-6. Write README.md
+
+1. *User* is a table for ALL users (administrators and passengers/customers). It stores the username, first/last name, email/phone, password and the access level(which defines whether the user is administrator or passenger) for a particular user.
+   *Order* table uses user- and carId and also stores the dates of shipping/returning, order status(which can be placed, approved or delivered) and boolean variable which defines order completion.
+   Table called *Car* contains name field.
+   Database diagram:
+   ![alt text](https://github.com/irayarka/flproj/blob/lab-3/DB_UML.png)
+
+2. [SQLAlchemy ORM Models](https://github.com/irayarka/flproj/blob/lab-3/models.py)
+3. [File from versions](https://github.com/irayarka/flproj/blob/lab-3/7551ca4ed77b_.py)

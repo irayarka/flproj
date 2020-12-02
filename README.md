@@ -4,7 +4,6 @@
    *Order* table uses user- and carId and also stores the dates of shipping/returning, order status(which can be placed, approved or delivered) and boolean variable which defines order completion.
    Table called *Car* contains name field.
    
-   Database diagram:
    ![alt text](https://github.com/irayarka/flproj/blob/lab-3/DB_UML.png)
 
 2. [SQLAlchemy ORM Models](https://github.com/irayarka/flproj/blob/lab-3/models.py)

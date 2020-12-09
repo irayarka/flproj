@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Text, Enum, Date, Boolean, ForeignKey, create_engine
+from sqlalchemy import Column, Integer, Text, Enum, Date, Boolean, ForeignKey, create_engine, Float
 import os
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -27,6 +27,7 @@ class car_table(Base):
     __tablename__ = 'Car'
     name = Column(Text)
     carId = Column(Integer, primary_key=True)
+    price = Column(Float)
 
 
 class order_table(Base):

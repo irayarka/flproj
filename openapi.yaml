@@ -10,6 +10,8 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
+  - name: login
+    description: User authentication
   - name: admin
     description: Deleting and adding cars to the system
   - name: passenger
@@ -18,13 +20,98 @@ tags:
     description: Cars to book
   - name: store
     description: Access to Carrental orders
+  - name: order
+    description: Order
 paths:
-  /car:
+  /login:
+    post:
+      tags:
+      - login
+      summary: User authentication, token returning
+      operationId: login
+      requestBody:
+        description: Data for login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginData'
+        required: true
+      responses: 
+        200:
+          description: Token
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /cars/car:
+    post:
+      tags:
+        - admin
+      summary: Add a new car to the rental
+      operationId: appCar
+      requestBody:
+        description: Car object that needs to be added to the rental
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      security:
+        - bearer_auth: []
+      x-codegen-request-body-name: body
+  '/cars/car/{carId}':
+    get:
+      tags:
+        - car
+      summary: Find car by ID
+      description: Returns a single car
+      operationId: getCarById
+      parameters:
+        - name: carId
+          in: path
+          description: ID of car to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Car not found
+          content: {}
+      security:
+        - bearer_auth: []
     put:
       tags:
         - admin
       summary: Update an exicting car
       operationId: updateCar
+      parameters:
+        - name: carId
+          in: path
+          description: ID of car to update
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: Car object that needs to be added to the store
         content:
@@ -46,121 +133,14 @@ paths:
           description: Validation exception
           content: {}
       security:
-        - carrental_auth:
-            - 'write:cars'
-            - 'read:cars'
+        - bearer_auth: []
       x-codegen-request-body-name: body
-    post:
-      tags:
-        - admin
-      summary: Add a new car to the rental
-      operationId: appCar
-      requestBody:
-        description: Car object that needs to be added to the rental
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Car'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Car'
-        required: true
-      responses:
-        '405':
-          description: Invalid input
-          content: {}
-      security:
-        - carrental_auth:
-            - 'write:cars'
-            - 'read:cars'
-      x-codegen-request-body-name: body
-  /car/findByStatus:
-    get:
-      tags:
-        - car
-      summary: Finds cars by status
-      description: Multiple status values can be provided with comma separated strings
-      operationId: findCarsByStatus
-      parameters:
-        - name: status
-          in: query
-          description: Status values that need to be considered for filter
-          required: true
-          style: form
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              default: available
-              enum:
-                - available
-                - pending
-                - sold
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Car'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Car'
-        '400':
-          description: Invalid status value
-          content: {}
-      security:
-        - carrental_auth:
-            - 'write:cars'
-            - 'read:cars'
-  '/car/{carId}':
-    get:
-      tags:
-        - car
-      summary: Find car by ID
-      description: Returns a single car
-      operationId: getCarById
-      parameters:
-        - name: carId
-          in: path
-          description: ID of car to return
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Car'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Car'
-        '400':
-          description: Invalid ID supplied
-          content: {}
-        '404':
-          description: Car not found
-          content: {}
-      security:
-        - api_key: []
     delete:
       tags:
         - admin
       summary: Deletes a car
       operationId: deleteCar
       parameters:
-        - name: api_key
-          in: header
-          schema:
-            type: string
         - name: carId
           in: path
           description: Car id to delete
@@ -176,10 +156,8 @@ paths:
           description: Car not found
           content: {}
       security:
-        - carrental_auth:
-            - 'write:pets'
-            - 'read:pets'
-  /store/inventory:
+        - bearer_auth: []
+  /cars:
     get:
       tags:
         - store
@@ -197,13 +175,28 @@ paths:
                   type: integer
                   format: int32
       security:
-        - api_key: []
-  /store/order:
+        - bearer_auth: []
+  /cars/car/{carId}/order:
     post:
       tags:
         - passenger
       summary: Place an order for a car
       operationId: placeOrder
+      parameters:
+      - name: carId
+        in: path
+        description: Car id to order
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: query
+        description: id of user who orders a car
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         description: order placed for booking the car
         content:
@@ -225,17 +218,58 @@ paths:
           description: Invalid Order
           content: {}
       x-codegen-request-body-name: body
-  '/store/order/{orderId}':
+  '/cars/car/{carId}/order/{orderId}':
+    get:
+      tags:
+        - order
+      summary: Get booked order by ID
+      operationId: getOrderById
+      parameters:
+        - name: carId
+          in: path
+          description: ID of the order that needs to get
+          required: true
+          schema:
+            minimum: 1
+            type: integer
+            format: int64
+        - name: orderId
+          in: path
+          description: ID of the order that needs to be deleted
+          required: true
+          schema:
+             minimum: 1
+             type: integer
+             format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Order not found
+          content: {}
     delete:
       tags:
-        - passenger
-        - admin
-      summary: Delete book order by ID
+        - order
+      summary: Delete booked order by ID
       description: >-
         For valid response try integer IDs with positive integer value.        
         Negative or non-integer values will generate API errors
       operationId: deleteOrder
       parameters:
+        - name: carId
+          in: path
+          description: ID of the car
+          required: true
+          schema:
+            type: integer
+            format: int64
         - name: orderId
           in: path
           description: ID of the order that needs to be deleted
@@ -252,6 +286,36 @@ paths:
           description: Order not found
           content: {}
   /user:
+    get:
+      tags:
+      - passenger
+      - admin
+      summary: Lists users
+      description: Get the list of users
+      operationId: listUsers
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+      - name: username
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: Users list
+          content:
+            applicaion/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        default:
+          description: Error, something went wrong
+          content: {}
+      security:
+        - bearer_auth: []
     post:
       tags:
         - passenger
@@ -271,50 +335,6 @@ paths:
           description: successful operation
           content: {}
       x-codegen-request-body-name: body
-  /user/login:
-    get:
-      tags:
-        - passenger
-        - admin
-      summary: Logs user into the system
-      operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-        '400':
-          description: Invalid username/password supplied
-          content: {}
   /user/logout:
     get:
       tags:
@@ -471,16 +491,40 @@ components:
           format: int64
         name:
           type: string
-      xml:
-        name: Car
+        price:
+          type: integer
+          format: int64 
+    LoginData:
+      required:
+      - username
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Response:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: integer
+        type:
+          type: string
   securitySchemes:
-    carrental_auth:
+    bearer_auth:
       type: http
       scheme: bearer
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+      bearerFormat: JWT 
+    basic_auth:
+      type: http
+      scheme: basic
+security: [
+  bearer_auth: [],
+  basic_auth: []
+  ]
 servers:
   - description: SwaggerHub API Auto Mocking
-    url: 'https://virtserver.swaggerhub.com/irayarka/RESTlab2/1.0.0'
+    url: 'localhost:5050/v1/api'

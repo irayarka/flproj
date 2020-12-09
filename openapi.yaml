@@ -346,7 +346,7 @@ paths:
         default:
           description: successful operation
           content: {}
-  '/user/{username}':
+  '/user/{id}':
     get:
       tags:
         - passenger
@@ -354,12 +354,13 @@ paths:
       summary: Get user by user name
       operationId: getUserByName
       parameters:
-        - name: username
+        - name: id
           in: path
-          description: The name that needs to be fetched
+          description: The id that needs to be fetched
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -383,12 +384,13 @@ paths:
       description: This can only be done by the logged in user.
       operationId: updateUser
       parameters:
-        - name: username
+        - name: id
           in: path
-          description: name that need to be updated
+          description: The id that needs to be updated
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       requestBody:
         description: Updated user object
         content:

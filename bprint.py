@@ -43,29 +43,29 @@ def create_user():
     with session_scope():
         user_details = UserQuery().load(request.get_json(force=True))
         user = dbu.create_entry(user_table, **user_details)
-        return jsonify(UserQuery().dump(user))
+        return jsonify({"id": UserDetails().dump(user)["id"]})
 
 
-@api_blueprint.route("/user/<string:username>", methods=["GET"])
-def user_by_id(username):
+@api_blueprint.route("/user/<int:id>", methods=["GET"])
+def user_by_id(id):
     with session_scope():
-        user = dbu.get_entry_by_username(user_table, username)
+        user = dbu.get_entry_by_id(user_table, id)
         return jsonify(UserDetails().dump(user))
 
 
-@api_blueprint.route("/user/<string:username>", methods=["PUT"])
-def update_user(username):
+@api_blueprint.route("/user/<int:id>", methods=["PUT"])
+def update_user(id):
     with session_scope():
         user_details = UserQuery().load(request.json)
-        user = dbu.get_entry_by_username(user_table, username)
+        user = dbu.get_entry_by_id(user_table, id)
         dbu.update_entry(user, **user_details)
         return jsonify(Response().dump({"code": "200"}))
 
 
-@api_blueprint.route("/user/<string:username>", methods=["DELETE"])
-def delete_user(username):
+@api_blueprint.route("/user/<int:id>", methods=["DELETE"])
+def delete_user(id):
     with session_scope():
-        dbu.delete_user(user_table, username)
+        dbu.delete_entry(user_table, id)
         return jsonify(Response().dump({"code": "200"}))
 
 
@@ -86,9 +86,9 @@ def get_car_by_id(carId):
 @api_blueprint.route("/cars/car", methods=["POST"])
 def create_car():
     with session_scope():
-        car_details = CarDetails().load(request.json)
+        car_details = CarQuery().load(request.json)
         car = dbu.create_entry(car_table, **car_details)
-        return jsonify(CarDetails().dump(car))
+        return jsonify({"carId": CarDetails().dump(car)["carId"]})
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["PUT"])
@@ -103,7 +103,7 @@ def update_car(carId):
 @api_blueprint.route("/cars/car/<int:carId>", methods=["DELETE"])
 def delete_car(carId):
     with session_scope():
-        dbu.delete_entry(car_table, carId)
+        dbu.delete_car(car_table, carId)
         return jsonify(Response().dump({"code": "200"}))
 
 
@@ -112,22 +112,24 @@ def place_order(carId):
     with session_scope():
         order_data = OrderQuery().load(request.json)
         order = dbu.create_entry(order_table,
+                                 userId=order_data["userId"],
                                  carId=carId,
                                  shipDate=order_data["shipDate"],
                                  returnDate=order_data["returnDate"],
-                                 status="placed")
-        return jsonify(OrderDetails().dump(order))
+                                 status="placed",
+                                 complete=False)
+        return jsonify({"id": OrderDetails().dump(order)["id"]})
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["GET"])
 def get_order_by_id(carId, orderId):
     with session_scope():
-        order = dbu.get_entry_by_id(order_table, orderId)
+        order = dbu.get_entry_by_id(order_table, id=orderId)
         return jsonify(OrderDetails().dump(order))
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["DELETE"])
 def delete_order(carId, orderId):
     with session_scope():
-        dbu.delete_entry(order_table, orderId)
+        dbu.delete_entry(order_table, id=orderId)
         return jsonify(Response().dump({"code": "200"}))

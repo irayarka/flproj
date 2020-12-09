@@ -36,6 +36,6 @@ class order_table(Base):
     carId = Column(Integer, ForeignKey(car_table.carId))
     shipDate = Column(Date)
     returnDate = Column(Date)
-    usedId = Column(Integer, ForeignKey(user_table.id))
+    userId = Column(Integer, ForeignKey(user_table.id))
     status = Column(Enum('placed', 'approved', 'delivered', name='Order_status'))
     complete = Column(Boolean)

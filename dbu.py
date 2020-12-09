@@ -37,7 +37,7 @@ def get_entry_by_username(model_class, username, **kwargs):
 
 def get_entry_by_id(model_class, id, **kwargs):
     session = Session()
-    return session.query(model_class).filter_by(id=id, **kwargs).all()
+    return session.query(model_class).filter_by(id=id, **kwargs).first()
 
 
 def update_entry(entry, *, commit=True, **kwargs):
@@ -49,15 +49,15 @@ def update_entry(entry, *, commit=True, **kwargs):
     return entry
 
 
-def delete_user(user_table, username, commit=True, **kwargs):
+def delete_entry(model_class, id, *, commit=True, **kwargs):
     session = Session()
-    session.query(user_table).filter_by(username=username, **kwargs).delete()
+    session.query(model_class).filter_by(id=id, **kwargs).delete()
     if commit:
         session.commit()
 
 
-def delete_entry(model_class, id, *, commit=True, **kwargs):
+def delete_car(model_class, carId, *, commit=True, **kwargs):
     session = Session()
-    session.query(model_class).filter_by(id=id, **kwargs).delete()
+    session.query(model_class).filter_by(carId=carId, **kwargs).delete()
     if commit:
         session.commit()

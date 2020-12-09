@@ -69,7 +69,7 @@ class ListUsersReq(Schema):
 
 
 class UserById(Schema):
-    userId = fields.Integer
+    userId = fields.Integer()
 
 
 class Response(Schema):

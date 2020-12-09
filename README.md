@@ -1,11 +1,8 @@
 # flproj
 
-1. 
-  * *User* is a table for ALL users (administrators and passengers/customers). It stores the username, first/last name, email/phone, password and the access level(which defines whether the user is administrator or passenger) for a particular user.
-  * *Order* table uses user- and carId and also stores the dates of shipping/returning, order status(which can be placed, approved or delivered) and boolean variable which defines order completion.
-  * Table called *Car* contains name field.
-   
-   ![alt text](https://github.com/irayarka/flproj/blob/lab-3/DB_UML(1).png)
-
-2. [SQLAlchemy ORM Models](https://github.com/irayarka/flproj/blob/lab-3/models.py)
-3. [File from versions](https://github.com/irayarka/flproj/blob/lab-3/7551ca4ed77b_.py)
+Files:
+1. [schema.py](https://github.com/irayarka/flproj/lab-4/main/schema.py) contains schemas for entities;
+2. [dbu.py](https://github.com/irayarka/flproj/blob/lab-4/dbu.py) contains methods to interact with database;
+3. [errors.py](https://github.com/irayarka/flproj/blob/lab-4/errors.py) contains error 4 handlers(for invalid id, invalid input, not found and internal server error);
+4. [bprint.py](https://github.com/irayarka/flproj/blob/lab-4/bprint.py) is a file, in which database requests are written;
+5. [app.py](https://github.com/irayarka/flproj/blob/lab-4/app.py) is a Flask app to run.

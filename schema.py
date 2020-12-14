@@ -12,7 +12,7 @@ class UserDetails(Schema):
         deserialize=lambda obj: generate_password_hash(obj), load_only=True
     )
     phone = fields.String()
-    accessLevel = fields.String(validate=validate.OneOf(["admin", "passenger"]))
+    admin = fields.Boolean()
 
 
 class UserQuery(Schema):
@@ -24,8 +24,7 @@ class UserQuery(Schema):
         deserialize=lambda obj: generate_password_hash(obj), load_only=True
     )
     phone = fields.String()
-    accessLevel = fields.String(validate=validate.OneOf(["admin", "passenger"]))
-
+    admin = fields.Boolean()
 
 class OrderDetails(Schema):
     id = fields.Integer()

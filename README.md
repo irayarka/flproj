@@ -1,8 +1,8 @@
 # flproj
 
-Files:
-1. [schema.py](https://github.com/irayarka/flproj/lab-4/main/schema.py) contains schemas for entities;
-2. [dbu.py](https://github.com/irayarka/flproj/blob/lab-4/dbu.py) contains methods to interact with database;
-3. [errors.py](https://github.com/irayarka/flproj/blob/lab-4/errors.py) contains error 4 handlers(for invalid id, invalid input, not found and internal server error);
-4. [bprint.py](https://github.com/irayarka/flproj/blob/lab-4/bprint.py) is a file, in which database requests are written;
-5. [app.py](https://github.com/irayarka/flproj/blob/lab-4/app.py) is a Flask app to run.
+Changes compared to lab 4:
+1. In table user_table for accessLevel now is admin field which Boolean;
+2. Added JWT;
+3. Fixed hashing bug(hashed passwords were stored incorrectly);
+4. Added error handler for 401 error(Unauthorized access);
+5. Added authorization(ONLY admins can get list of user, particular user by id, port/put/delete a car).

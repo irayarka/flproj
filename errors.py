@@ -8,6 +8,10 @@ def invalid_id(e):
     return error_hnd(code=400, type="INVALID_ID")
 
 
+def unauthorized_access(e):
+    return error_hnd(code=401, type="UNAUTHORIZED_ACCESS")
+
+
 def not_found(e):
     return error_hnd(code=404, type='NOT_FOUND')
 

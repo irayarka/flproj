@@ -14,13 +14,13 @@ Base = declarative_base()
 class user_table(Base):
     __tablename__ = 'User'
     id = Column(Integer, primary_key=True)
-    username = Column(Text)
+    username = Column(Text, unique=True)
     firstName = Column(Text)
     lastName = Column(Text)
     email = Column(Text)
     password = Column(Text)
     phone = Column(Text)
-    accessLevel = Column(Enum('admin', 'passenger', name='User_access'))
+    admin = Column(Boolean)
 
 
 class car_table(Base):

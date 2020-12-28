@@ -13,7 +13,12 @@ def list_users(email=None, username=None):
 
 def list_cars(*filters):
     session = Session()
-    return session.query(order_table).join(car_table).fiter_by(*filters).all()
+    return session.query(car_table).filter_by(*filters).all()
+
+
+def list_orders(*filters):
+    session = Session()
+    return session.query(order_table).filter_by(*filters).all()
 
 
 def get_car_by_id(model_class, carId, **kwargs):
@@ -32,7 +37,7 @@ def create_entry(model_class, *, commit=True, **kwargs):
 
 def get_entry_by_username(model_class, username, **kwargs):
     session = Session()
-    return session.query(model_class).filter_by(username=username, **kwargs).one()
+    return session.query(model_class).filter_by(username=username, **kwargs).first()
 
 
 def get_entry_by_id(model_class, id, **kwargs):

@@ -11,11 +11,6 @@ import bcrypt
 api_blueprint = Blueprint('api', __name__)
 
 
-def set_password(self, pw):
-    pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
-    self.password_hash = pwhash.decode('utf8')
-
-
 @contextmanager
 def session_scope():
     session = Session()
@@ -34,7 +29,6 @@ def session_scope():
 
 
 @api_blueprint.route("/login", methods=["POST"])
-@jwt_required
 def login():
     from app import bcrypt
     data = LoginData().load(request.json)
@@ -46,10 +40,10 @@ def login():
         if bcrypt.check_password_hash(hpw, data["password"]):
             access_token = create_access_token(identity=data["username"], expires_delta=datetime.timedelta(days=365))
             return jsonify(access_token=access_token, id=user.id), 200
-        elif not data["password"] == user.password:
-            return jsonify({"message": "Wrong pass!", "data pass": data["password"], "user pass": user.password})
-    elif not data:
-        return jsonify({"message": "Wrong data!"})
+    #     elif not data["password"] == user.password:
+    #         return jsonify({"message": "Wrong pass!", "data pass": data["password"], "user pass": user.password})
+    # elif not data:
+    #     return jsonify({"message": "Wrong data!"})
 
 
 @api_blueprint.route("/user", methods=["GET"])
@@ -63,11 +57,10 @@ def list_users():
             userlist = dbu.list_users(args.get("email"), args.get("username"))
             return jsonify(UserDetails(many=True).dump(userlist))
         else:
-            return jsonify({"code": "401", "type": "UNAUTHORISED_ACCESS"})
+            return jsonify(code=401, type='UNAUTHORIZED_ACCESS'), 401
 
 
 @api_blueprint.route("/user", methods=["POST"])
-@jwt_required
 def create_user():
     with session_scope():
         from app import bcrypt
@@ -88,25 +81,35 @@ def user_by_id(id):
             user = dbu.get_entry_by_id(user_table, id)
             return jsonify(UserDetails().dump(user))
         else:
-            return jsonify({"code": "401", "type": "UNAUTHORISED_ACCESS"})
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/user/<int:id>", methods=["PUT"])
 @jwt_required
 def update_user(id):
     with session_scope():
-        user_details = UserQuery().load(request.json)
-        user = dbu.get_entry_by_id(user_table, id)
-        dbu.update_entry(user, **user_details)
-        return jsonify(Response().dump({"code": "200"}))
+        current_user = get_jwt_identity()
+        user = dbu.get_entry_by_username(user_table, current_user)
+        if user.admin or user.id == id:
+            user_details = UserQuery().load(request.json)
+            user = dbu.get_entry_by_id(user_table, id)
+            dbu.update_entry(user, **user_details)
+            return jsonify(Response().dump({"code": "200"}))
+        else:
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/user/<int:id>", methods=["DELETE"])
 @jwt_required
 def delete_user(id):
     with session_scope():
-        dbu.delete_entry(user_table, id)
-        return jsonify(Response().dump({"code": "200"}))
+        current_user = get_jwt_identity()
+        user = dbu.get_entry_by_username(user_table, current_user)
+        if user.admin or user.id == id:
+            dbu.delete_entry(user_table, id)
+            return jsonify(Response().dump({"code": "200"}))
+        else:
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars", methods=["GET"])
@@ -136,7 +139,7 @@ def create_car():
             car = dbu.create_entry(car_table, **car_details)
             return jsonify({"carId": CarDetails().dump(car)["carId"]})
         else:
-            return jsonify(code=401, type="UNAUTHORISED_ACCESS")
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["PUT"])
@@ -151,7 +154,7 @@ def update_car(carId):
             dbu.update_entry(car, **car_details)
             return jsonify(Response().dump({"code": "200"}))
         else:
-            return jsonify(code=401, type="UNAUTHORISED_ACCESS")
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["DELETE"])
@@ -164,30 +167,53 @@ def delete_car(carId):
             dbu.delete_car(car_table, carId)
             return jsonify(Response().dump({"code": "200"}))
         else:
-            return jsonify(code=401, type="UNAUTHORISED_ACCESS")
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order", methods=["POST"])
 @jwt_required
 def place_order(carId):
     with session_scope():
-        order_data = OrderQuery().load(request.json)
-        order = dbu.create_entry(order_table,
-                                 userId=order_data["userId"],
-                                 carId=carId,
-                                 shipDate=order_data["shipDate"],
-                                 returnDate=order_data["returnDate"],
-                                 status="placed",
-                                 complete=False)
-        return jsonify({"id": OrderDetails().dump(order)["id"]})
+        current_user = get_jwt_identity()
+        user = dbu.get_entry_by_username(user_table, current_user)
+        if user:
+            order_data = OrderQuery().load(request.json)
+            order = dbu.create_entry(order_table,
+                                     userId=user.id,
+                                     carId=carId,
+                                     shipDate=order_data["shipDate"],
+                                     returnDate=order_data["returnDate"],
+                                     status="placed",
+                                     complete=False)
+            return jsonify({"id": OrderDetails().dump(order)["id"]})
+        else:
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
+
+
+@api_blueprint.route("/orders", methods=["GET"])
+@jwt_required
+def get_orders():
+    with session_scope():
+        current_user = get_jwt_identity()
+        user = dbu.get_entry_by_username(user_table, current_user)
+        if user.admin:
+            orders = dbu.list_orders()
+            return jsonify(OrderDetails(many=True).dump(orders))
+        else:
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["GET"])
 @jwt_required
 def get_order_by_id(carId, orderId):
     with session_scope():
-        order = dbu.get_entry_by_id(order_table, id=orderId)
-        return jsonify(OrderDetails().dump(order))
+        current_user = get_jwt_identity()
+        user = dbu.get_entry_by_username(user_table, current_user)
+        if user:
+            order = dbu.get_entry_by_id(order_table, id=orderId)
+            return jsonify(OrderDetails().dump(order))
+        else:
+            return jsonify(code=401, type="UNAUTHORIZED_ACCESS"), 401
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["DELETE"])

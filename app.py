@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'needs-to-be-changed'
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 
-app.register_blueprint(api_blueprint, url_prefix="/api/v1")
+app.register_blueprint(api_blueprint)
 
 app.register_error_handler(400, invalid_id)
 app.register_error_handler(401, unauthorized_access)

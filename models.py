@@ -25,8 +25,8 @@ class user_table(Base):
 
 class car_table(Base):
     __tablename__ = 'Car'
-    name = Column(Text)
     carId = Column(Integer, primary_key=True)
+    name = Column(Text)
     price = Column(Float)
 
 

@@ -26,6 +26,7 @@ class UserQuery(Schema):
     phone = fields.String()
     admin = fields.Boolean()
 
+
 class OrderDetails(Schema):
     id = fields.Integer()
     carId = fields.Integer()
@@ -37,7 +38,6 @@ class OrderDetails(Schema):
 
 
 class OrderQuery(Schema):
-    userId = fields.Integer()
     shipDate = fields.Date()
     returnDate = fields.Date()
 
@@ -58,17 +58,9 @@ class LoginData(Schema):
     password = fields.String()
 
 
-class Token(Schema):
-    access_token = fields.String()
-
-
 class ListUsersReq(Schema):
     email = fields.String(validate=validate.Email())
     username = fields.String()
-
-
-class UserById(Schema):
-    userId = fields.Integer()
 
 
 class Response(Schema):

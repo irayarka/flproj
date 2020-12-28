@@ -1,8 +1,31 @@
 # flproj
 
-Changes compared to lab 4:
-1. In table user_table for accessLevel now is admin field which Boolean;
-2. Added JWT;
-3. Fixed hashing bug(hashed passwords were stored incorrectly);
-4. Added error handler for 401 error(Unauthorized access);
-5. Added authorization(ONLY admins can get list of user, particular user by id, port/put/delete a car).
+**Lab 6:**
+
+Wrote 38 tests
+
+Tests running:
+
+```
+C:\Users\iryna\PycharmProjects\flproj>coverage run -m unittest test_flask.py
+......................................
+----------------------------------------------------------------------
+Ran 38 tests in 65.327s
+
+OK
+```
+
+Coverage report:
+
+```
+C:\Users\iryna\PycharmProjects\flproj>coverage report -i dbu.py models.py schema.py bprint.py app.py
+Name        Stmts   Miss  Cover
+-------------------------------
+app.py         19      1    95%
+bprint.py     153      9    94%
+dbu.py         48      2    96%
+models.py      33      0   100%
+schema.py      46      0   100%
+-------------------------------
+TOTAL         299     12    96%
+```

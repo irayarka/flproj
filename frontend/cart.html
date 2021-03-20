@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/cart.css">
+    <script src="https://kit.fontawesome.com/fba851af54.js" crossorigin="anonymous"></script>
+    <title>My cart</title>
+</head>
+<body>
+  <div class="grid-container">
+    <!--For future "burger" menu icon for mobile devices-->
+    <div class="menu-icon">
+     <i class="fas fa-bars header__menu"></i>
+    </div>
+    
+   <header class="header">
+     <p class="banner">Car Rental</p> 
+   </header>
+ 
+   <aside class="sidenav">
+     <ul class="sidenav__list">
+       <li class="greeting">Hello, user!</li>
+       <li class="sidenav__list-item"><a href="profile.html">My profile</a></li>
+       <li class="sidenav__list-item"><a href="home.html">Catalog</a></li>
+       <li class="sidenav__list-item"><a href="cart.html">My cart</a></li>
+       <li class="sidenav__list-item"><a href="login.html">Logout</a></li>
+     </ul>
+   </aside>
+ 
+   <main class="main">
+    <h2>Shopping Cart</h2>
+
+    <div class="shopping-cart">
+    
+      <div class="product">
+        <div class="product-image">
+          <img src="images/sample.png">
+        </div>
+        <div class="product-details">
+          <div class="product-title">Car</div>
+          <p class="product-description">The Car Description</p>
+        </div>
+        <div class="product-price">1199.99</div>
+        <div class="product-removal">
+          <button class="remove-product">
+            Remove
+          </button>
+        </div>
+      </div>
+    
+      <div class="totals">
+        <div class="totals-item">
+          <label>Total</label>
+          <div class="totals-value" id="cart-total">1199.99</div>
+        </div>
+      </div>
+          <button class="checkout">Checkout</button>
+    </div>
+   </main>
+ 
+   <footer class="footer">
+     <div class="footer__copyright">&copy; 2021</div>
+     <div class="footer__signature">Made by Ira Yarka</div>
+   </footer>
+ </div>
+</body>
+</html>

@@ -9,12 +9,6 @@ branches:
   only:
     - main
 
-jobs:
-  include:
-  - name: "Python on Windows"
-    os: windows
-    language: shell
-
 script: python -m unittest -v
 
 notifications:

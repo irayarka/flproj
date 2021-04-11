@@ -12,8 +12,8 @@ branches:
 jobs:
   include:
   - name: "Python on Windows"
-      os: windows
-      language: shell
+    os: windows
+    language: shell
 
 script: unittest
 

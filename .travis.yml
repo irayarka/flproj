@@ -15,7 +15,7 @@ jobs:
     os: windows
     language: shell
 
-script: python run -m unittest -v
+script: python -m unittest -v
 
 notifications:
   email:

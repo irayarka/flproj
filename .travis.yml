@@ -7,7 +7,7 @@ services:
 
 branches:
   only:
-    - lab-6
+    - main
 
 jobs:
   include:

@@ -15,7 +15,7 @@ jobs:
     os: windows
     language: shell
 
-script: python run -m unittest backend/test_flask.py
+script: python run -m unittest -v
 
 notifications:
   email:

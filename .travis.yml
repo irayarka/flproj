@@ -9,7 +9,7 @@ branches:
   only:
     - lab-6
 
-script: python -m unittest -v
+script: python3 app.py
 
 notifications:
   email:

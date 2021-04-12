@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.9"
+
+services:
+  - postgresql
+
+branches:
+  only:
+    - lab-6
+
+script: python -m unittest -v
+
+notifications:
+  email:
+    recipients:
+      - iryna.yarka@gmail.com

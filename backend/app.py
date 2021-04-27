@@ -23,4 +23,4 @@ jwt = JWTManager(app)
 
 if __name__ == "__main__":
     # app.run(debug=True, host='localhost', port=5050)
-    serve(app, host='localhost', port=5050)
+    serve(app, host='localhost', port=5000)

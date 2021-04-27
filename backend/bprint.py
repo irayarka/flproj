@@ -28,6 +28,11 @@ def session_scope():
             raise
 
 
+@api_blueprint.route("/", methods=["GET"])
+def start():
+    return jsonify(start=True)
+
+
 @api_blueprint.route("/login", methods=["POST"])
 def login():
     from app import bcrypt
@@ -47,7 +52,7 @@ def login():
 
 
 @api_blueprint.route("/user", methods=["GET"])
-@jwt_required
+@jwt_required()
 def list_users():
     with session_scope():
         current_user = get_jwt_identity()
@@ -72,7 +77,7 @@ def create_user():
 
 
 @api_blueprint.route("/user/<int:id>", methods=["GET"])
-@jwt_required
+@jwt_required()
 def user_by_id(id):
     with session_scope():
         current_user = get_jwt_identity()
@@ -85,7 +90,7 @@ def user_by_id(id):
 
 
 @api_blueprint.route("/user/<int:id>", methods=["PUT"])
-@jwt_required
+@jwt_required()
 def update_user(id):
     with session_scope():
         current_user = get_jwt_identity()
@@ -100,7 +105,7 @@ def update_user(id):
 
 
 @api_blueprint.route("/user/<int:id>", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_user(id):
     with session_scope():
         current_user = get_jwt_identity()
@@ -113,7 +118,7 @@ def delete_user(id):
 
 
 @api_blueprint.route("/cars", methods=["GET"])
-@jwt_required
+@jwt_required()
 def get_inventory():
     with session_scope():
         cars = dbu.list_cars()
@@ -121,7 +126,7 @@ def get_inventory():
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["GET"])
-@jwt_required
+@jwt_required()
 def get_car_by_id(carId):
     with session_scope():
         car = dbu.get_car_by_id(car_table, carId)
@@ -129,7 +134,7 @@ def get_car_by_id(carId):
 
 
 @api_blueprint.route("/cars/car", methods=["POST"])
-@jwt_required
+@jwt_required()
 def create_car():
     with session_scope():
         current_user = get_jwt_identity()
@@ -143,7 +148,7 @@ def create_car():
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["PUT"])
-@jwt_required
+@jwt_required()
 def update_car(carId):
     with session_scope():
         current_user = get_jwt_identity()
@@ -158,7 +163,7 @@ def update_car(carId):
 
 
 @api_blueprint.route("/cars/car/<int:carId>", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_car(carId):
     with session_scope():
         current_user = get_jwt_identity()
@@ -171,7 +176,7 @@ def delete_car(carId):
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order", methods=["POST"])
-@jwt_required
+@jwt_required()
 def place_order(carId):
     with session_scope():
         current_user = get_jwt_identity()
@@ -191,7 +196,7 @@ def place_order(carId):
 
 
 @api_blueprint.route("/orders", methods=["GET"])
-@jwt_required
+@jwt_required()
 def get_orders():
     with session_scope():
         current_user = get_jwt_identity()
@@ -204,7 +209,7 @@ def get_orders():
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["GET"])
-@jwt_required
+@jwt_required()
 def get_order_by_id(carId, orderId):
     with session_scope():
         current_user = get_jwt_identity()
@@ -217,7 +222,7 @@ def get_order_by_id(carId, orderId):
 
 
 @api_blueprint.route("/cars/car/<int:carId>/order/<int:orderId>", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_order(carId, orderId):
     with session_scope():
         dbu.delete_entry(order_table, id=orderId)

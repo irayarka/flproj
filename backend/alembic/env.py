@@ -13,14 +13,18 @@ import os
 config = context.config
 config.set_main_option(
     "sqlalchemy.url",
-    os.getenv("DB_URI", "postgresql+psycopg2://postgres:password@localhost:5482/carrentaldb"),
+    os.getenv("DB_URI", "postgresql+psycopg2://postgres:password@127.0.0.1:5482/carrentaldb"),
 )
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
 
-sys.path.insert(1, 'C:/Users/iryna/PycharmProjects/flproj')
+# add your model's MetaData object here
+# for 'autogenerate' support
+# from myapp import mymodel
+# target_metadata = mymodel.Base.metadata
+sys.path.append('C:/Users/iryna/Desktop/flask_global/flproj/backend')
 from models import Base
 target_metadata = [Base.metadata]
 

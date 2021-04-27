@@ -1,0 +1,23 @@
+language: python
+python:
+  - "3.9"
+
+services:
+  - postgresql
+
+branches:
+  only:
+    - main
+
+jobs:
+  include:
+  - name: "Python on Windows"
+    os: windows
+    language: shell
+
+script: unittest
+
+notifications:
+  email:
+    recipients:
+      - iryna.yarka@gmail.com

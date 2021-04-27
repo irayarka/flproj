@@ -20,14 +20,9 @@ config.set_main_option(
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
 
-sys.path.insert(1, 'C:/Users/iryna/PycharmProjects/flproj')
+sys.path.append('C:/Users/iryna/Desktop/flask_global/flproj/backend')
 from models import Base
 target_metadata = [Base.metadata]
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline():

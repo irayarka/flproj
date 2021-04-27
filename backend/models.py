@@ -3,7 +3,7 @@ import os
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-DB_URI = os.getenv("DB_URI", "postgres://postgres:qwedsazxc123@localhost:5000/carrentaldb")
+DB_URI = os.getenv("DB_URI", "postgresql+psycopg2://postgres:password@localhost:5482/carrentaldb")
 engine = create_engine(DB_URI)
 SessionFactory = sessionmaker(bind=engine)
 Session = scoped_session(SessionFactory)

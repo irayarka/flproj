@@ -28,11 +28,6 @@ def session_scope():
             raise
 
 
-@api_blueprint.route("/", methods=["GET"])
-def start():
-    return jsonify(start=True)
-
-
 @api_blueprint.route("/login", methods=["POST"])
 def login():
     from app import bcrypt

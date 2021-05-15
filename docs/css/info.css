@@ -4,7 +4,7 @@ body {
   color: black;
   font-family: 'Open Sans', Helvetica, sans-serif;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Assign grid instructions to our parent grid container, mobile-first (hide the sidenav) */
@@ -12,10 +12,12 @@ body {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr;
-      grid-template-columns: 1fr;
+  grid-template-columns: 1fr;
   -ms-grid-rows: 50px 1fr 50px;
-      grid-template-rows: 50px 1fr 50px;
-      grid-template-areas: 'header' 'main' 'footer';
+  grid-template-rows: 50px 1fr 50px;
+  grid-template-areas: 'header'
+      'main'
+      'footer';
   height: 100vh;
 }
 
@@ -28,11 +30,11 @@ body {
   top: 5px;
   left: 10px;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   background-color: #eae2b7;
   border-radius: 50%;
   z-index: 1;
@@ -48,11 +50,11 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   padding: 0 16px;
   background-color: #f77f00;
 }
@@ -70,21 +72,36 @@ body {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   height: 100%;
   width: 240px;
   position: fixed;
   overflow-y: auto;
   -webkit-transform: translateX(-245px);
-          transform: translateX(-245px);
+  transform: translateX(-245px);
   -webkit-transition: all .6s ease-in-out;
   transition: all .6s ease-in-out;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   z-index: 2;
   /* Needs to sit above the hamburger menu icon */
   background-color: #d62828;
+}
+
+.sidenav.active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.sidenav__close-icon {
+  position: absolute;
+  visibility: visible;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ddd;
 }
 
 .sidenav__list {
@@ -129,11 +146,11 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   padding: 0 16px;
   background-color: #003049;
   color: #f77f00;
@@ -145,7 +162,9 @@ body {
   .grid-container {
     -ms-grid-columns: 240px 1fr;
         grid-template-columns: 240px 1fr;
-        grid-template-areas: "sidenav header" "sidenav main" "sidenav footer";
+        grid-template-areas: "sidenav header"
+ "sidenav main"
+ "sidenav footer";
   }
   .sidenav {
     position: relative;
@@ -210,7 +229,41 @@ body {
   color: #003049;
 }
 
+.main,
+.grid-container .header {
+    transition: all .4s ease-in-out;
+}
+
+.main.active,
+.grid-container .header.active {
+    padding-left: 240px;
+}
+
+/* Non-mobile styles, 750px breakpoint */
+@media only screen and (min-width: 46.875em) {
+
+    /* Show the sidenav */
+    .grid-container {
+        -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+    }
+
+    .sidenav {
+        position: fixed;
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        transition: all .4s ease-in-out;
+    }
+
+    .sidenav.active {
+        transform: translateX(0);
+    }
+}
+
 .fa-bars:before {
-  content: "\f0c9";
-  color: #d62828;
+    content: "\f0c9";
+    color: #d62828;
 }

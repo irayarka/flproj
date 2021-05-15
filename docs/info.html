@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/info.css">
     <script src="https://kit.fontawesome.com/fba851af54.js" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="javascript/js_requests.js"></script>
+    <script type = "text/javascript">
+      window.onload=carbyid;
+    </script>
     <title>Car info</title>
 </head>
 <body>
@@ -20,12 +24,15 @@
    </header>
  
    <aside class="sidenav">
+    <div class="sidenav__close-icon">
+      <i class="fas fa-times sidenav__brand-close"></i>
+    </div>
      <ul class="sidenav__list">
        <li class="greeting">Hello, user!</li>
        <li class="sidenav__list-item"><a href="profile.html">My profile</a></li>
        <li class="sidenav__list-item"><a href="home.html">Catalog</a></li>
        <li class="sidenav__list-item"><a href="cart.html">My cart</a></li>
-       <li class="sidenav__list-item"><a href="index.html">Logout</a></li>
+       <li class="sidenav__list-item"><a href="login.html">Logout</a></li>
      </ul>
    </aside>
  
@@ -34,12 +41,18 @@
         <div class="grid product">
           <img src="images/sample.png" alt="car" width="60%" height="60%">
           <div class="column-xs-12 column-md-5">
-            <h1>Some cool car</h1>
-            <h2>$1199.99</h2>
+            <h1 class="car_name"></h1>
+            <h2 class="car_price"></h2>
             <div class="description">
               <p>The Car description</p>
             </div>
-            <button class="add-to-cart">Add To Cart</button>
+            <label for="from">Book from</label>
+            <input class="from" id="from" type="date" value="2021-05-15">
+            <label for="to">Book to</label>
+            <input class="to" id="to" type="date"  value="2021-05-20">
+            <br>
+            <br>
+            <button class="add-to-cart" onclick="addtocart()">Add To Cart</button>
           </div>
         </div>
    </main>
@@ -49,5 +62,6 @@
      <div class="footer__signature">Made by Ira Yarka</div>
    </footer>
  </div>
+ <script type = "text/javascript" src="javascript/openclosebutton.js"></script>
 </body>
 </html>

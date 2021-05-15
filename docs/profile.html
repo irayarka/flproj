@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/profile.css">
     <script src="https://kit.fontawesome.com/fba851af54.js" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="javascript/js_requests.js"></script>
     <title>My profile</title>
 </head>
 <body>
   <div class="grid-container">
-    <!--For future "burger" menu icon for mobile devices-->
     <div class="menu-icon">
      <i class="fas fa-bars header__menu"></i>
     </div>
@@ -20,27 +20,30 @@
    </header>
  
    <aside class="sidenav">
+    <div class="sidenav__close-icon">
+      <i class="fas fa-times sidenav__brand-close"></i>
+    </div>
      <ul class="sidenav__list">
        <li class="greeting">Hello, user!</li>
        <li class="sidenav__list-item"><a href="profile.html">My profile</a></li>
        <li class="sidenav__list-item"><a href="home.html">Catalog</a></li>
        <li class="sidenav__list-item"><a href="cart.html">My cart</a></li>
-       <li class="sidenav__list-item"><a href="index.html">Logout</a></li>
+       <li class="sidenav__list-item"><a href="login.html">Logout</a></li>
      </ul>
    </aside>
 
    <main class="main">
     <div class="login-page">
         <div class="form">
-            <form class="register-form" action="home.html">
-                <input type="text" placeholder="your username">
-                <input type="text" placeholder="your first name">
-                <input type="text" placeholder="your last name">
-                <input type="email" placeholder="your email">
-                <input type="text" placeholder="your phone">
-                <input type="password" placeholder="your password">
-                <input type="password" placeholder="confirm your password">
-                <button>Update</button>
+            <form class="register-form">
+              <input id="username_id" type="text" placeholder="username" required>
+              <input id="fname_id" type="text" placeholder="first name">
+              <input id = "lname_id" type="text" placeholder="last name">
+              <input id="email_id" type="email" placeholder="email">
+              <input id = "phone_id" type="text" placeholder="phone">
+              <input id="pass_id" type="password" placeholder="password" required>
+              <input type="password" placeholder="confirm password" required>
+              <button onclick="updateuser()">Update</button>
             </form>
         </div>
       </div>
@@ -51,5 +54,6 @@
      <div class="footer__signature">Made by Ira Yarka</div>
    </footer>
  </div>
+ <script type="text/javascript" src="javascript/openclosebutton.js"></script>
 </body>
 </html>

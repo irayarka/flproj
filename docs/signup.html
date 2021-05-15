@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/starting_pages.css ">
+    <script type = "text/javascript" src="javascript/js_requests.js"></script>
     <title>Sign Up</title>
 </head>
 <body>
@@ -17,17 +18,17 @@
 
     <div class="login-page">
         <div class="form">
-            <form class="register-form" action="home.html">
-                <input type="text" placeholder="username" required>
-                <input type="text" placeholder="first name">
-                <input type="text" placeholder="last name">
-                <input type="email" placeholder="email">
-                <input type="text" placeholder="phone">
-                <input type="password" placeholder="password" required>
-                <input type="password" placeholder="confirm password" required>
-                <label for="admin" class="message"><input type="checkbox" id="admin" /> <span>I am admin</span></label>
-                <button>create</button>
-                <p class="message">Already registered? <a href="index.html">Sign In</a></p>
+            <form class="register-form">
+                <input id="username_id" type="text" placeholder="username" required>
+                <input id="fname_id" type="text" placeholder="first name">
+                <input id = "lname_id" type="text" placeholder="last name">
+                <input id="email_id" type="email" placeholder="email">
+                <input id = "phone_id" type="text" placeholder="phone">
+                <input id="pass_id" type="password" placeholder="password" required>
+                <input id="conf_pass" type="password" placeholder="confirm password" required>
+                <label id="admin_id" for="admin" class="message"><input type="checkbox" id="admin" /> <span>I am admin</span></label>
+                <button onclick="signup()">create</button>
+                <p class="message">Already registered? <a href="login.html">Sign In</a></p>
             </form>
         </div>
       </div>

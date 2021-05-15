@@ -21,7 +21,9 @@ body {
       grid-template-columns: 1fr;
   -ms-grid-rows: 50px 1fr 50px;
       grid-template-rows: 50px 1fr 50px;
-      grid-template-areas: 'header' 'main' 'footer';
+      grid-template-areas: 'header'
+ 'main'
+ 'footer';
   height: 100vh;
 }
 
@@ -93,6 +95,21 @@ body {
   background-color: #d62828;
 }
 
+.sidenav.active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.sidenav__close-icon {
+  position: absolute;
+  visibility: visible;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ddd;
+}
+
 .sidenav__list {
   padding: 0;
   margin-top: 85px;
@@ -145,19 +162,15 @@ body {
   color: #f77f00;
 }
 
-/* Non-mobile styles, 750px breakpoint */
-@media only screen and (min-width: 46.875em) {
-  /* Show the sidenav */
-  .grid-container {
-    -ms-grid-columns: 240px 1fr;
-        grid-template-columns: 240px 1fr;
-        grid-template-areas: "sidenav header" "sidenav main" "sidenav footer";
-  }
-  .sidenav {
-    position: relative;
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
+
+.main,
+.grid-container .header {
+    transition: all .4s ease-in-out;
+}
+
+.main.active,
+.grid-container .header.active {
+    padding-left: 240px;
 }
 
 .fa-bars:before {

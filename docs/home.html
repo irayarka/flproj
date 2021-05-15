@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/home.css">
     <script src="https://kit.fontawesome.com/fba851af54.js" crossorigin="anonymous"></script>
+    <script type = "text/javascript" src="javascript/js_requests.js"></script>
+    <script type = "text/javascript">
+      window.onload = getcars;
+    </script>
     <title>Home page</title>
 </head>
 <body>
   <div class="grid-container">
-    <!--For future "burger" menu icon for mobile devices-->
     <div class="menu-icon">
      <i class="fas fa-bars header__menu"></i>
     </div>
@@ -20,12 +23,15 @@
    </header>
  
    <aside class="sidenav">
+    <div class="sidenav__close-icon">
+      <i class="fas fa-times sidenav__brand-close"></i>
+    </div>
      <ul class="sidenav__list">
        <li class="greeting">Hello, user!</li>
        <li class="sidenav__list-item"><a href="profile.html">My profile</a></li>
        <li class="sidenav__list-item"><a href="home.html">Catalog</a></li>
        <li class="sidenav__list-item"><a href="cart.html">My cart</a></li>
-       <li class="sidenav__list-item"><a href="index.html">Logout</a></li>
+       <li class="sidenav__list-item"><a href="login.html">Logout</a></li>
      </ul>
    </aside>
  
@@ -33,21 +39,46 @@
  
      <div class="main-overview">
        <div class="overviewcard">
-         <!--<div class="overviewcard__icon">Image holder</div>-->
-         <a href="info.html"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
-         <div class="overviewcard__info">Car info</div>
+         <a href="info.html" id="0"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+            <p class="car_name"></p>
+            <p class="car_price"></p>
+         </div>
        </div>
        <div class="overviewcard">
-         <div class="overviewcard__icon">Image holder</div>
-         <div class="overviewcard__info">Car info</div>
+        <a href="info.html" id="1"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+           <p class="car_name"></p>
+           <p class="car_price"></p>
+         </div>
        </div>
        <div class="overviewcard">
-         <div class="overviewcard__icon">Image holder</div>
-         <div class="overviewcard__info">Car info</div>
+        <a href="info.html" id="2"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+          <p class="car_name"></p>
+          <p class="car_price"></p>
+         </div>
        </div>
        <div class="overviewcard">
-         <div class="overviewcard__icon">Image holder</div>
-         <div class="overviewcard__info">Car info</div>
+        <a href="info.html" id="3"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+          <p class="car_name"></p>
+          <p class="car_price"></p>
+         </div>
+       </div>
+       <div class="overviewcard">
+        <a href="info.html" id="4"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+          <p class="car_name"></p>
+          <p class="car_price"></p>
+         </div>
+       </div>
+       <div class="overviewcard">
+        <a href="info.html" id="5"><img src="images/sample.png" alt="car" width="60%" height="60%"></a>
+         <div class="overviewcard__info">
+          <p class="car_name"></p>
+          <p class="car_price"></p>
+         </div>
        </div>
      </div>
    </main>
@@ -57,5 +88,6 @@
      <div class="footer__signature">Made by Ira Yarka</div>
    </footer>
  </div>
+ <script type = "text/javascript" src="javascript/openclosebutton.js"></script>
 </body>
 </html>

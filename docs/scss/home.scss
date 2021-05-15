@@ -65,6 +65,21 @@ body {
 	z-index: 2; /* Needs to sit above the hamburger menu icon */
 	background-color: $primary-color;
 }
+
+.sidenav.active {
+	transform: translateX(0);
+  }
+  
+  .sidenav__close-icon {
+	position: absolute;
+	visibility: visible;
+	top: 8px;
+	right: 12px;
+	cursor: pointer;
+	font-size: 20px;
+	color: #ddd;
+  }
+  
   
   .sidenav__list {
 	padding: 0;
